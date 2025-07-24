@@ -1,3 +1,279 @@
+.cuadrante-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  background: transparent;
+  z-index: 1;
+  position: relative;
+}
+.cuadrante-wrapper {
+  position: relative;
+  margin: 2.5rem auto 2.5rem auto;
+  width: 100%;
+  max-width: 950px;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+}
+.cuadrante-card {
+  border: 1.5px solid #EC0000;
+  border-radius: 18px;
+  margin: 0;
+  min-height: 180px;
+  padding: 1.5rem 1.2rem 1.5rem 1.2rem;
+  box-shadow: 0 2px 12px rgba(236,0,0,0.07);
+  background: #fff;
+  animation: fadeIn 0.6s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.cuadrante-card:hover {
+  box-shadow: 0 4px 24px rgba(236,0,0,0.13);
+  border-color: #b80000;
+}
+.cuadrante-card h2 {
+  color: #EC0000;
+  font-size: 1.15rem;
+  margin-bottom: 0.7rem;
+  text-align: left;
+}
+.cuadrante-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+@media (max-width: 900px) {
+  .cuadrante-wrapper {
+    min-height: 340px;
+    max-width: 99vw;
+    padding: 0 0.5rem;
+  }
+  .cuadrante-matrix {
+    min-width: 0;
+    max-width: 99vw;
+    gap: 1rem;
+  }
+}
+@media (max-width: 700px) {
+
+  .cuadrante-label-top-left, .cuadrante-label-top, .cuadrante-label-top-right,
+  .cuadrante-label-bottom-left, .cuadrante-label-bottom, .cuadrante-label-bottom-right {
+    font-size: 0.85rem;
+    top: -1.5em;
+    bottom: -1.5em;
+    padding: 0.2em 0.7em;
+  }
+  .cuadrante-label-left, .cuadrante-label-right {
+    font-size: 0.85rem;
+    left: -1.5em;
+    right: -1.5em;
+    padding: 0.2em 0.7em;
+  }
+}
+.cuadrante-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid #bbb;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  z-index: 1;
+  position: relative;
+}
+
+@media (max-width: 700px) {
+  .cuadrante-matrix {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+/* Cuadrante Ágil tipo matriz 2x2 con etiquetas */
+.cuadrante-wrapper {
+  position: relative;
+  margin: 2rem auto 2.5rem auto;
+  width: 100%;
+  max-width: 900px;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cuadrante-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid #bbb;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  z-index: 1;
+}
+.cuadrante-card {
+  border: 1px solid #ddd;
+  border-radius: 0;
+  margin: 0;
+  min-height: 180px;
+  padding: 1.2rem 1rem 1.2rem 1.2rem;
+  box-shadow: none;
+  background: #fff;
+  animation: fadeIn 0.6s ease-out;
+}
+.cuadrante-card h2 {
+  color: #222;
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+}
+.cuadrante-label {
+  position: absolute;
+  background: none;
+  color: #222;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 2em;
+  padding: 0.3em 1.5em;
+  z-index: 2;
+  opacity: 1;
+  box-shadow: none;
+}
+
+/* Oculta completamente la etiqueta central del cuadrante */
+.cuadrante-label-center {
+  display: none !important;
+}
+.cuadrante-label-top-left {
+  display: none;
+}
+.cuadrante-label-top {
+  left: 50%;
+  top: -2.7em;
+  transform: translateX(-50%);
+  min-width: 260px;
+  text-align: center;
+  background: #fff;
+  color: #EC0000;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(236,0,0,0.10);
+  border: 2px solid #EC0000;
+  padding: 0.3em 1.5em;
+  z-index: 3;
+}
+}
+.cuadrante-label-top-right {
+  display: none !important;
+}
+.cuadrante-label-left {
+  left: -3.7em;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  background: #fff;
+  color: #EC0000;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(236,0,0,0.10);
+  border: 2px solid #EC0000;
+  padding: 0.3em 1.5em;
+  z-index: 3;
+}
+.cuadrante-label-right {
+  right: -3.7em;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  background: #fff;
+  color: #EC0000;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(236,0,0,0.10);
+  border: 2px solid #EC0000;
+  padding: 0.3em 1.5em;
+  z-index: 3;
+}
+  .cuadrante-label-left {
+    left: -2.2em;
+    font-size: 0.95rem;
+    padding: 0.2em 1em;
+  }
+  .cuadrante-label-right {
+    right: -2.2em;
+    font-size: 0.95rem;
+    padding: 0.2em 1em;
+  }
+.cuadrante-label-bottom-left {
+  display: none;
+}
+.cuadrante-label-bottom {
+  left: 50%;
+  bottom: -2.7em;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #EC0000;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(236,0,0,0.10);
+  border: 2px solid #EC0000;
+  padding: 0.3em 1.5em;
+  z-index: 3;
+}
+  .cuadrante-label-top {
+    top: -2.1em;
+    font-size: 0.95rem;
+    min-width: 160px;
+    padding: 0.2em 0.7em;
+  }
+  .cuadrante-label-bottom {
+    bottom: -2.1em;
+    font-size: 0.95rem;
+    padding: 0.2em 1em;
+  }
+.cuadrante-label-bottom-right {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .cuadrante-wrapper {
+    min-height: 340px;
+    max-width: 99vw;
+  }
+  .cuadrante-matrix {
+    min-width: 0;
+    max-width: 99vw;
+  }
+}
+@media (max-width: 700px) {
+  .cuadrante-wrapper {
+    min-height: 220px;
+  }
+  .cuadrante-matrix {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    border-radius: 6px;
+  }
+  .cuadrante-label-top-left, .cuadrante-label-top, .cuadrante-label-top-right,
+  .cuadrante-label-bottom-left, .cuadrante-label-bottom, .cuadrante-label-bottom-right {
+    font-size: 0.85rem;
+    top: -1.5em;
+    bottom: -1.5em;
+    padding: 0.2em 0.7em;
+  }
+  .cuadrante-label-left, .cuadrante-label-right {
+    font-size: 0.85rem;
+    left: -1.5em;
+    right: -1.5em;
+    padding: 0.2em 0.7em;
+  }
+}
 
 /* Reset y estilos globales Santander */
 * {
@@ -147,6 +423,9 @@ body {
   transition: background 0.2s, box-shadow 0.2s;
   margin-bottom: 2rem;
   animation: pulse 2s infinite;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 .santander-btn:disabled {
   background: #ccc;
@@ -299,4 +578,121 @@ body {
 
 .border-santander {
   border-color: #EC0000;
+}
+
+/* --- CUADRANTE ÁGIL MODERNO SANTANDER --- */
+.cuadrante-wrapper {
+  position: relative;
+  margin: 2.5rem auto 2.5rem auto;
+  width: 100%;
+  max-width: 950px;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+}
+.cuadrante-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(236,0,0,0.07);
+  z-index: 1;
+  position: relative;
+  padding: 2rem 1rem;
+}
+.cuadrante-card {
+  border: 2px solid #EC0000;
+  border-radius: 18px;
+  margin: 0;
+  min-height: 220px;
+  padding: 2rem 1.5rem 2rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(236,0,0,0.10);
+  background: #fff;
+  animation: fadeIn 0.6s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.cuadrante-card:hover {
+  box-shadow: 0 6px 32px rgba(236,0,0,0.16);
+  border-color: #b80000;
+}
+.cuadrante-card h2 {
+  color: #EC0000;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  font-weight: 700;
+}
+.cuadrante-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+.cuadrante-card li {
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7em;
+  font-size: 1.08rem;
+}
+.cuadrante-card li:last-child {
+  margin-bottom: 0;
+}
+.cuadrante-card input[type="checkbox"] {
+  accent-color: #EC0000;
+  width: 1.15em;
+  height: 1.15em;
+  margin-top: 0.18em;
+}
+.cuadrante-card label {
+  cursor: pointer;
+  user-select: none;
+}
+.cuadrante-card.selected {
+  border-color: #b80000;
+  box-shadow: 0 6px 32px rgba(236,0,0,0.18);
+}
+.cuadrante-card-2 { grid-area: 1 / 1 / 2 / 2; }
+.cuadrante-card-3 { grid-area: 1 / 2 / 2 / 3; }
+.cuadrante-card-1 { grid-area: 2 / 1 / 3 / 2; }
+.cuadrante-card-4 { grid-area: 2 / 2 / 3 / 3; }
+
+@media (max-width: 900px) {
+  .cuadrante-wrapper {
+    min-height: 340px;
+    max-width: 99vw;
+    padding: 0 0.5rem;
+  }
+  .cuadrante-matrix {
+    min-width: 0;
+    max-width: 99vw;
+    gap: 1.2rem;
+    padding: 1.2rem 0.2rem;
+  }
+}
+@media (max-width: 700px) {
+  .cuadrante-wrapper {
+    min-height: 220px;
+    padding: 0 0.2rem;
+  }
+  .cuadrante-matrix {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    border-radius: 12px;
+    gap: 1.1rem;
+    padding: 0.7rem 0.1rem;
+  }
+  .cuadrante-card {
+    border-radius: 12px;
+    min-height: 120px;
+    padding: 1.1rem 0.7rem 1.1rem 0.7rem;
+  }
 }

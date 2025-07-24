@@ -12,38 +12,51 @@ function Header() {
   );
 }
 
-const cuadrante = [
+
+const cuadrantes = [
   {
-    titulo: 'Tecnología / Soporte a Equipo',
+    numero: 2,
+    titulo: 'Q2: Automáticas & Manuales',
+    pruebas: [
+      'Pruebas Funcionales',
+      'Pruebas de Historias de Usuario',
+      'Pruebas Manuales Exploratorias',
+      'Revisión de Aceptación',
+      'Pruebas con Criterios Gherkin / BDD / ATDD',
+    ],
+  },
+  {
+    numero: 3,
+    titulo: 'Q3: Manuales',
+    pruebas: [
+      'Pruebas Exploratorias',
+      'Pruebas de Usabilidad',
+      'Pruebas Alpha/Beta',
+      'Validación de UX/UI',
+      'Pruebas con UAT',
+      'Pruebas de Flujo de Negocio',
+    ],
+  },
+  {
+    numero: 1,
+    titulo: 'Q1: Automáticas',
     pruebas: [
       'Pruebas Unitarias',
-      'Pruebas de Integración',
-      'Revisión de Código',
-      'Automatización de pruebas',
+      'Pruebas de Componentes',
+      'Pruebas de Integración Técnica',
+      'Pruebas de API (a nivel técnico)',
+      'Pruebas de Regresión Técnicas',
     ],
   },
   {
-    titulo: 'Negocio / Soporte a Equipo',
+    numero: 4,
+    titulo: 'Q4: Herramientas y Pruebas No Funcionales',
     pruebas: [
-      'Revisión de Requerimientos',
-      'Ejemplos y Casos de Uso',
-      'BDD / TDD',
-    ],
-  },
-  {
-    titulo: 'Tecnología / Críticas al Producto',
-    pruebas: [
+      'Pruebas de Rendimiento (carga, estrés)',
       'Pruebas de Seguridad',
-      'Pruebas de Rendimiento',
-      'Pruebas de Integración Continua',
-    ],
-  },
-  {
-    titulo: 'Negocio / Críticas al Producto',
-    pruebas: [
-      'Pruebas de Aceptación',
-      'Pruebas de Usuario',
-      'Exploratory Testing',
+      'Pruebas de Compatibilidad',
+      'Pruebas de Recuperación / Resiliencia',
+      'Pruebas No Funcionales en General',
     ],
   },
 ];
@@ -73,13 +86,19 @@ function App() {
     <>
       <Header />
       <div className="santander-bg">
-        <h1 className="santander-title">Cuadrante Ágil de Testing</h1>
-        <div className="cuadrante-grid">
-          {cuadrante.map((q) => (
-            <div className="cuadrante-card" key={q.titulo}>
-              <h2>{q.titulo}</h2>
+        <div className="cuadrante-wrapper">
+          {/* Etiquetas laterales y superiores */}
+          <div className="cuadrante-label cuadrante-label-top">Orientados a negocio</div>
+          <div className="cuadrante-label cuadrante-label-left">Apoyan al equipo</div>
+          <div className="cuadrante-label cuadrante-label-bottom">Orientados a tecnología</div>
+          <div className="cuadrante-label cuadrante-label-right">Evalúan el producto</div>
+
+          {/* Cuadrantes 2x2 */}
+          <div className="cuadrante-matrix">
+            <div className="cuadrante-card cuadrante-card-2">
+              <h2><b>Q2: Automáticas & Manuales</b></h2>
               <ul>
-                {q.pruebas.map((prueba) => (
+                {cuadrantes[0].pruebas.map((prueba) => (
                   <li key={prueba}>
                     <label className="santander-checkbox">
                       <input
@@ -93,7 +112,58 @@ function App() {
                 ))}
               </ul>
             </div>
-          ))}
+            <div className="cuadrante-card cuadrante-card-3">
+              <h2><b>Q3: Manuales</b></h2>
+              <ul>
+                {cuadrantes[1].pruebas.map((prueba) => (
+                  <li key={prueba}>
+                    <label className="santander-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={seleccionadas.includes(prueba)}
+                        onChange={() => togglePrueba(prueba)}
+                      />
+                      {prueba}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="cuadrante-card cuadrante-card-1">
+              <h2><b>Q1: Automáticas</b></h2>
+              <ul>
+                {cuadrantes[2].pruebas.map((prueba) => (
+                  <li key={prueba}>
+                    <label className="santander-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={seleccionadas.includes(prueba)}
+                        onChange={() => togglePrueba(prueba)}
+                      />
+                      {prueba}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="cuadrante-card cuadrante-card-4">
+              <h2><b>Q4: Herramientas y Pruebas No Funcionales</b></h2>
+              <ul>
+                {cuadrantes[3].pruebas.map((prueba) => (
+                  <li key={prueba}>
+                    <label className="santander-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={seleccionadas.includes(prueba)}
+                        onChange={() => togglePrueba(prueba)}
+                      />
+                      {prueba}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
         <button className="santander-btn" onClick={generarDocumento} disabled={seleccionadas.length === 0}>
           Generar Estrategia de Pruebas
