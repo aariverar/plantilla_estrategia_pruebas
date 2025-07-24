@@ -163,174 +163,170 @@ function App() {
             </div>
           </div>
         </div>
-        <button className="santander-btn" onClick={generarDocumento} disabled={seleccionadas.length === 0}>
-          Generar Estrategia de Pruebas
-        </button>
-      </div>
 
-      {/* === SECCIÓN: CATEGORÍAS DE TÉCNICAS DE DISEÑO (ISTQB) === */}
-      <div className="istqb-section">
-        <h2>✅ CATEGORÍAS DE TÉCNICAS DE DISEÑO (según ISTQB)</h2>
-        <div className="istqb-categorias">
-          <div className="istqb-categoria-card">
-            <h3>Técnicas de caja negra</h3>
-            <p>Basadas en comportamiento externo</p>
+        {/* === SECCIÓN: CATEGORÍAS DE TÉCNICAS DE DISEÑO (ISTQB) === */}
+        <div className="istqb-section">
+          <h2>✅ CATEGORÍAS DE TÉCNICAS DE DISEÑO (según ISTQB)</h2>
+          <div className="istqb-categorias">
+            <div className="istqb-categoria-card">
+              <h3>Técnicas de caja negra</h3>
+              <p>Basadas en comportamiento externo</p>
+            </div>
+            <div className="istqb-categoria-card">
+              <h3>Técnicas de caja blanca</h3>
+              <p>Basadas en estructura interna del código</p>
+            </div>
+            <div className="istqb-categoria-card">
+              <h3>Técnicas basadas en experiencia</h3>
+              <p>Basadas en juicio, intuición y experiencia</p>
+            </div>
           </div>
-          <div className="istqb-categoria-card">
-            <h3>Técnicas de caja blanca</h3>
-            <p>Basadas en estructura interna del código</p>
-          </div>
-          <div className="istqb-categoria-card">
-            <h3>Técnicas basadas en experiencia</h3>
-            <p>Basadas en juicio, intuición y experiencia</p>
-          </div>
-        </div>
 
-        <h2>🎯 1. TÉCNICAS DE CAJA NEGRA (Black-box)</h2>
-        <table className="istqb-table">
-          <thead>
-            <tr>
-              <th>Técnica</th>
-              <th>Descripción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Partición de equivalencia</td>
-              <td>Divide entradas/salidas en clases válidas e inválidas, prueba 1 por clase.</td>
-            </tr>
-            <tr>
-              <td>Análisis de valores límite</td>
-              <td>Verifica comportamientos en límites extremos (mínimos/máximos).</td>
-            </tr>
-            <tr>
-              <td>Tabla de decisión</td>
-              <td>Evalúa combinaciones de condiciones y reglas.</td>
-            </tr>
-            <tr>
-              <td>Tabla de causa-efecto</td>
-              <td>Deriva casos desde una tabla lógica de causas (inputs) y efectos (outputs).</td>
-            </tr>
-            <tr>
-              <td>Transición de estados</td>
-              <td>Prueba cambios de estado y eventos activadores.</td>
-            </tr>
-            <tr>
-              <td>Caso de uso (Use Case)</td>
-              <td>Pruebas centradas en flujos funcionales del usuario.</td>
-            </tr>
-            <tr>
-              <td>Pruebas basadas en requisitos</td>
-              <td>Cada caso se deriva de un requisito funcional concreto.</td>
-            </tr>
-            <tr>
-              <td>Pruebas de comportamiento (BDD)</td>
-              <td>Usa Gherkin o lenguajes similares para definir escenarios.</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>🧠 2. TÉCNICAS BASADAS EN EXPERIENCIA</h2>
-        <table className="istqb-table">
-          <thead>
-            <tr>
-              <th>Técnica</th>
-              <th>Descripción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Pruebas exploratorias</td>
-              <td>Sin casos predefinidos, se prueba sobre la marcha observando resultados.</td>
-            </tr>
-            <tr>
-              <td>Adivinación de errores (error guessing)</td>
-              <td>Se anticipan fallos comunes basados en la experiencia del tester.</td>
-            </tr>
-            <tr>
-              <td>Checklists (listas de verificación)</td>
-              <td>Lista de elementos a validar. Útil en pruebas de mantenimiento.</td>
-            </tr>
-            <tr>
-              <td>Pruebas basadas en escenarios</td>
-              <td>Se diseñan historias realistas de uso para probar flujos completos.</td>
-            </tr>
-            <tr>
-              <td>Pruebas heurísticas</td>
-              <td>Aplicación de patrones conocidos de errores (ej. heurísticas de Bach).</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>🔍 3. TÉCNICAS DE CAJA BLANCA (White-box)</h2>
-        <table className="istqb-table">
-          <thead>
-            <tr>
-              <th>Técnica</th>
-              <th>Descripción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Cobertura de sentencias</td>
-              <td>Asegura que cada línea de código sea ejecutada al menos una vez.</td>
-            </tr>
-            <tr>
-              <td>Cobertura de decisiones (ramas)</td>
-              <td>Asegura que cada decisión (if, else, switch) sea evaluada en ambas direcciones.</td>
-            </tr>
-            <tr>
-              <td>Cobertura de condiciones</td>
-              <td>Evalúa cada condición booleana por separado.</td>
-            </tr>
-            <tr>
-              <td>Cobertura de condición/decisión</td>
-              <td>Combinación de ambas.</td>
-            </tr>
-            <tr>
-              <td>Cobertura de múltiples condiciones</td>
-              <td>Evalúa todas las combinaciones de condiciones en una decisión.</td>
-            </tr>
-            <tr>
-              <td>Pruebas de flujo de datos</td>
-              <td>Verifica el uso correcto de variables (definidas, usadas, destruidas).</td>
-            </tr>
-            <tr>
-              <td>Pruebas de caminos lógicos</td>
-              <td>Verifica todos los caminos posibles a través del código.</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="istqb-extra">
-          <h3>🔄 TÉCNICAS ADICIONALES SEGÚN ISTQB AVANZADO (Test Analyst y Test Manager)</h3>
-          <table className="istqb-extra-table">
+          <h2>🎯 1. TÉCNICAS DE CAJA NEGRA (Black-box)</h2>
+          <table className="istqb-table">
             <thead>
               <tr>
+                <th></th>
                 <th>Técnica</th>
-                <th>Aplicación típica</th>
+                <th>Descripción</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Pruebas basadas en riesgo (Risk-based)</td>
-                <td>Se diseñan según impacto y probabilidad.</td>
-              </tr>
-              <tr>
-                <td>Técnicas combinatorias (pairwise, t-wise)</td>
-                <td>Reducen combinaciones usando teoría matemática.</td>
-              </tr>
-              <tr>
-                <td>Pruebas ortogonales</td>
-                <td>Variante de pruebas combinatorias optimizadas.</td>
-              </tr>
-              <tr>
-                <td>Técnicas de prueba de calidad de datos</td>
-                <td>Prueba de consistencia, precisión y completitud de datos.</td>
-              </tr>
+              {[
+                { nombre: 'Partición de equivalencia', desc: 'Divide entradas/salidas en clases válidas e inválidas, prueba 1 por clase.' },
+                { nombre: 'Análisis de valores límite', desc: 'Verifica comportamientos en límites extremos (mínimos/máximos).' },
+                { nombre: 'Tabla de decisión', desc: 'Evalúa combinaciones de condiciones y reglas.' },
+                { nombre: 'Tabla de causa-efecto', desc: 'Deriva casos desde una tabla lógica de causas (inputs) y efectos (outputs).' },
+                { nombre: 'Transición de estados', desc: 'Prueba cambios de estado y eventos activadores.' },
+                { nombre: 'Caso de uso (Use Case)', desc: 'Pruebas centradas en flujos funcionales del usuario.' },
+                { nombre: 'Pruebas basadas en requisitos', desc: 'Cada caso se deriva de un requisito funcional concreto.' },
+                { nombre: 'Pruebas de comportamiento (BDD)', desc: 'Usa Gherkin o lenguajes similares para definir escenarios.' },
+              ].map(({ nombre, desc }) => (
+                <tr key={nombre}>
+                  <td>
+                    <label className="santander-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={seleccionadas.includes(nombre)}
+                        onChange={() => togglePrueba(nombre)}
+                      />
+                    </label>
+                  </td>
+                  <td>{nombre}</td>
+                  <td>{desc}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
+
+          <h2>🧠 2. TÉCNICAS BASADAS EN EXPERIENCIA</h2>
+          <table className="istqb-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Técnica</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { nombre: 'Pruebas exploratorias', desc: 'Sin casos predefinidos, se prueba sobre la marcha observando resultados.' },
+                { nombre: 'Adivinación de errores (error guessing)', desc: 'Se anticipan fallos comunes basados en la experiencia del tester.' },
+                { nombre: 'Checklists (listas de verificación)', desc: 'Lista de elementos a validar. Útil en pruebas de mantenimiento.' },
+                { nombre: 'Pruebas basadas en escenarios', desc: 'Se diseñan historias realistas de uso para probar flujos completos.' },
+                { nombre: 'Pruebas heurísticas', desc: 'Aplicación de patrones conocidos de errores (ej. heurísticas de Bach).' },
+              ].map(({ nombre, desc }) => (
+                <tr key={nombre}>
+                  <td>
+                    <label className="santander-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={seleccionadas.includes(nombre)}
+                        onChange={() => togglePrueba(nombre)}
+                      />
+                    </label>
+                  </td>
+                  <td>{nombre}</td>
+                  <td>{desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <h2>🔍 3. TÉCNICAS DE CAJA BLANCA (White-box)</h2>
+          <table className="istqb-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Técnica</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { nombre: 'Cobertura de sentencias', desc: 'Asegura que cada línea de código sea ejecutada al menos una vez.' },
+                { nombre: 'Cobertura de decisiones (ramas)', desc: 'Asegura que cada decisión (if, else, switch) sea evaluada en ambas direcciones.' },
+                { nombre: 'Cobertura de condiciones', desc: 'Evalúa cada condición booleana por separado.' },
+                { nombre: 'Cobertura de condición/decisión', desc: 'Combinación de ambas.' },
+                { nombre: 'Cobertura de múltiples condiciones', desc: 'Evalúa todas las combinaciones de condiciones en una decisión.' },
+                { nombre: 'Pruebas de flujo de datos', desc: 'Verifica el uso correcto de variables (definidas, usadas, destruidas).' },
+                { nombre: 'Pruebas de caminos lógicos', desc: 'Verifica todos los caminos posibles a través del código.' },
+              ].map(({ nombre, desc }) => (
+                <tr key={nombre}>
+                  <td>
+                    <label className="santander-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={seleccionadas.includes(nombre)}
+                        onChange={() => togglePrueba(nombre)}
+                      />
+                    </label>
+                  </td>
+                  <td>{nombre}</td>
+                  <td>{desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div className="istqb-extra">
+            <h3>🔄 TÉCNICAS ADICIONALES SEGÚN ISTQB AVANZADO (Test Analyst y Test Manager)</h3>
+            <table className="istqb-extra-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Técnica</th>
+                  <th>Aplicación típica</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { nombre: 'Pruebas basadas en riesgo (Risk-based)', desc: 'Se diseñan según impacto y probabilidad.' },
+                  { nombre: 'Técnicas combinatorias (pairwise, t-wise)', desc: 'Reducen combinaciones usando teoría matemática.' },
+                  { nombre: 'Pruebas ortogonales', desc: 'Variante de pruebas combinatorias optimizadas.' },
+                  { nombre: 'Técnicas de prueba de calidad de datos', desc: 'Prueba de consistencia, precisión y completitud de datos.' },
+                ].map(({ nombre, desc }) => (
+                  <tr key={nombre}>
+                    <td>
+                      <label className="santander-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={seleccionadas.includes(nombre)}
+                          onChange={() => togglePrueba(nombre)}
+                        />
+                      </label>
+                    </td>
+                    <td>{nombre}</td>
+                    <td>{desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
+        <button className="santander-btn" onClick={generarDocumento} disabled={seleccionadas.length === 0}>
+          Generar Estrategia de Pruebas
+        </button>
       </div>
     </>
   );
