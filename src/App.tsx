@@ -1,6 +1,30 @@
 import { useState } from 'react';
 import './App.css';
 
+function ModalFloating({ open, x, y, children }: { open: boolean; x: number; y: number; children: React.ReactNode }) {
+  if (!open) return null;
+  return (
+    <div
+      className="modal-floating"
+      style={{ position: 'fixed', top: y + 12, left: x + 12, zIndex: 9999 }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Modal({ open, onClose, children }: { open: boolean; onClose: () => void; children: React.ReactNode }) {
+  if (!open) return null;
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>×</button>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 function Header() {
   return (
     <header className="santander-header">
@@ -62,6 +86,8 @@ const cuadrantes = [
 
 function App() {
   const [seleccionadas, setSeleccionadas] = useState<string[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalPos, setModalPos] = useState({ x: 0, y: 0 });
 
   const togglePrueba = (prueba: string) => {
     setSeleccionadas((prev) =>
@@ -202,7 +228,21 @@ function App() {
                 { nombre: 'Pruebas basadas en requisitos', desc: 'Cada caso se deriva de un requisito funcional concreto.' },
                 { nombre: 'Pruebas de comportamiento (BDD)', desc: 'Usa Gherkin o lenguajes similares para definir escenarios.' },
               ].map(({ nombre, desc }) => (
-                <tr key={nombre}>
+                <tr key={nombre}
+                  onMouseEnter={e => {
+                    if (nombre === 'Partición de equivalencia') {
+                      setModalOpen(true);
+                      setModalPos({ x: e.clientX, y: e.clientY });
+                    }
+                  }}
+                  onMouseMove={e => {
+                    if (nombre === 'Partición de equivalencia' && modalOpen) {
+                      setModalPos({ x: e.clientX, y: e.clientY });
+                    }
+                  }}
+                  onMouseLeave={() => nombre === 'Partición de equivalencia' && setModalOpen(false)}
+                  style={{ cursor: nombre === 'Partición de equivalencia' ? 'pointer' : undefined }}
+                >
                   <td>
                     <label className="santander-checkbox">
                       <input
@@ -218,6 +258,24 @@ function App() {
               ))}
             </tbody>
           </table>
+          <ModalFloating open={modalOpen} x={modalPos.x} y={modalPos.y}>
+            <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+              <b style={{ fontSize: '1.01em', color: '#b00' }}>🎯 Escenario:</b>
+              <div style={{ marginBottom: '0.4em' }}>Supón que tienes un campo que acepta valores entre 1 y 100. La lógica válida es aceptar solo los números dentro de ese rango.</div>
+              <b style={{ fontSize: '1.01em', color: '#b00' }}>✅ Particiones:</b>
+              <ul style={{ margin: '0.2em 0 0 1em', padding: 0 }}>
+                <li><b>Clase válida:</b> valores entre 1 y 100 (por ejemplo, 50)</li>
+                <li><b>Clases inválidas:</b>
+                  <ul style={{ margin: '0.1em 0 0 1em', padding: 0 }}>
+                    <li>valores menores a 1 (ej. –5)</li>
+                    <li>valores mayores a 100 (ej. 150)</li>
+                  </ul>
+                </li>
+              </ul>
+              <b style={{ fontSize: '1.01em', color: '#b00' }}>🧪 Aplicación:</b>
+              <div>Seleccionas un valor por cada clase, con lo cual no necesitas probar todos los posibles valores.<br />Esto reduce el número de pruebas sin perder efectividad.</div>
+            </div>
+          </ModalFloating>
 
           <h2>🧠 2. TÉCNICAS BASADAS EN EXPERIENCIA</h2>
           <table className="istqb-table">
