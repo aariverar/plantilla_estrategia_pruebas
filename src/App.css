@@ -1,3 +1,127 @@
+/* === SECCIÓN: CATEGORÍAS DE TÉCNICAS DE DISEÑO (ISTQB) === */
+.istqb-section {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(236,0,0,0.08);
+  padding: 2.2rem 1.5rem 2.5rem 1.5rem;
+  margin: 2.5rem auto 2.5rem auto;
+  max-width: 900px;
+  border: 2px solid #EC0000;
+}
+.istqb-section h2 {
+  color: #EC0000;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+.istqb-categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2.2rem;
+}
+.istqb-categoria-card {
+  background: #fff;
+  border: 2px solid #EC0000;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(236,0,0,0.07);
+  flex: 1 1 260px;
+  min-width: 220px;
+  max-width: 320px;
+  padding: 1.2rem 1rem 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.istqb-categoria-card h3 {
+  color: #EC0000;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+.istqb-categoria-card p {
+  color: #222;
+  font-size: 0.98rem;
+  margin: 0 0 0.5rem 0;
+}
+.istqb-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2.2rem;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(236,0,0,0.06);
+}
+.istqb-table th, .istqb-table td {
+  border: 1px solid #eee;
+  padding: 0.6em 0.8em;
+  text-align: left;
+  font-size: 0.97rem;
+}
+.istqb-table th {
+  background: #EC0000;
+  color: #fff;
+  font-weight: 700;
+}
+.istqb-table tr:nth-child(even) td {
+  background: #faf6f6;
+}
+.istqb-table tr:hover td {
+  background: #fff0f0;
+}
+.istqb-extra {
+  margin-top: 2.2rem;
+  background: #fff;
+  border-radius: 12px;
+  border: 1.5px solid #EC0000;
+  box-shadow: 0 2px 8px rgba(236,0,0,0.06);
+  padding: 1.2rem 1rem;
+}
+.istqb-extra h3 {
+  color: #EC0000;
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.istqb-extra-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.7rem;
+}
+.istqb-extra-table th, .istqb-extra-table td {
+  border: 1px solid #eee;
+  padding: 0.5em 0.7em;
+  text-align: left;
+  font-size: 0.96rem;
+}
+.istqb-extra-table th {
+  background: #EC0000;
+  color: #fff;
+  font-weight: 700;
+}
+.istqb-extra-table tr:nth-child(even) td {
+  background: #faf6f6;
+}
+.istqb-extra-table tr:hover td {
+  background: #fff0f0;
+}
+@media (max-width: 900px) {
+  .istqb-section {
+    padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+    max-width: 99vw;
+  }
+  .istqb-categorias {
+    gap: 0.7rem;
+  }
+  .istqb-categoria-card {
+    min-width: 160px;
+    max-width: 99vw;
+    padding: 0.7rem 0.5rem;
+  }
+}
 .cuadrante-matrix {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -34,12 +158,13 @@
   transition: box-shadow 0.2s, border 0.2s;
 }
 .cuadrante-card:hover {
-  box-shadow: 0 4px 24px rgba(236,0,0,0.13);
+  box-shadow: 0 4px 24px rgba(223, 3, 3, 0.13);
   border-color: #b80000;
 }
 .cuadrante-card h2 {
   color: #EC0000;
   font-size: 1.15rem;
+  margin-top: 0;
   margin-bottom: 0.7rem;
   text-align: left;
 }
@@ -84,9 +209,9 @@
   gap: 0;
   width: 100%;
   background: #fff;
-  border: 1.5px solid #bbb;
+  border: 1.5px solid #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.04);
   z-index: 1;
   position: relative;
 }
@@ -133,6 +258,7 @@
 .cuadrante-card h2 {
   color: #222;
   font-size: 1.1rem;
+  margin-top: 0;
   margin-bottom: 0.7rem;
 }
 .cuadrante-label {
@@ -296,7 +422,7 @@
     background: #fff;
     color: #EC0000;
     border: 2px solid #EC0000;
-    box-shadow: 0 2px 8px rgba(236,0,0,0.10);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
     font-weight: 700;
     white-space: normal;
   }
@@ -677,6 +803,7 @@ padding-right: 0;
 .cuadrante-card h2 {
   color: #EC0000;
   font-size: 1rem;
+  margin-top: 0;
   margin-bottom: 0.5rem;
   text-align: left;
   font-weight: 700;
