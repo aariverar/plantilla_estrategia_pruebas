@@ -119,6 +119,9 @@ function App() {
   const [modalRequisitosPos, setModalRequisitosPos] = useState({ x: 0, y: 0 });
   const [modalBDDOpen, setModalBDDOpen] = useState(false);
   const [modalBDDPos, setModalBDDPos] = useState({ x: 0, y: 0 });
+  // Modal flotante para Pruebas exploratorias
+  const [modalExploratoriasOpen, setModalExploratoriasOpen] = useState(false);
+  const [modalExploratoriasPos, setModalExploratoriasPos] = useState({ x: 0, y: 0 });
 
   const togglePrueba = (prueba: string) => {
     setSeleccionadas((prev) =>
@@ -480,21 +483,65 @@ function App() {
                 { nombre: 'Pruebas basadas en escenarios', desc: 'Se diseñan historias realistas de uso para probar flujos completos.' },
                 { nombre: 'Pruebas heurísticas', desc: 'Aplicación de patrones conocidos de errores (ej. heurísticas de Bach).' },
               ].map(({ nombre, desc }) => (
-                <tr key={nombre}>
-                  <td>
-                    <label className="santander-checkbox">
-                      <input
-                        type="checkbox"
-                        checked={seleccionadas.includes(nombre)}
-                        onChange={() => togglePrueba(nombre)}
-                      />
-                    </label>
-                  </td>
-                  <td>{nombre}</td>
-                  <td>{desc}</td>
-                </tr>
+                nombre === 'Pruebas exploratorias' ? (
+                  <tr
+                    key={nombre}
+                    onMouseEnter={e => {
+                      setModalExploratoriasOpen(true);
+                      setModalExploratoriasPos({ x: e.clientX, y: e.clientY });
+                    }}
+                    onMouseMove={e => {
+                      if (modalExploratoriasOpen) {
+                        setModalExploratoriasPos({ x: e.clientX, y: e.clientY });
+                      }
+                    }}
+                    onMouseLeave={() => setModalExploratoriasOpen(false)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <td>
+                      <label className="santander-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={seleccionadas.includes(nombre)}
+                          onChange={() => togglePrueba(nombre)}
+                        />
+                      </label>
+                    </td>
+                    <td>{nombre}</td>
+                    <td>{desc}</td>
+                  </tr>
+                ) : (
+                  <tr key={nombre}>
+                    <td>
+                      <label className="santander-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={seleccionadas.includes(nombre)}
+                          onChange={() => togglePrueba(nombre)}
+                        />
+                      </label>
+                    </td>
+                    <td>{nombre}</td>
+                    <td>{desc}</td>
+                  </tr>
+                )
               ))}
             </tbody>
+          {/* Modal flotante para Pruebas exploratorias */}
+          <ModalFloating open={modalExploratoriasOpen} x={modalExploratoriasPos.x} y={modalExploratoriasPos.y}>
+            {modalExploratoriasOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  Las pruebas exploratorias permiten al evaluador analizar una aplicación sin casos de prueba predefinidos, facilitando el descubrimiento de defectos inesperados y validando la experiencia del usuario. En el ámbito bancario, complementan las pruebas formales al revelar errores no previstos y ofrecer una visión más realista del uso cotidiano.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una app bancaria, el tester navega libremente, consulta saldos, transfiere fondos y modifica datos, simulando escenarios como errores de conexión o cambios de contraseña seguidos de transferencias. Así, detecta problemas de usabilidad y validación que no están cubiertos en pruebas formales, mejorando la calidad y seguridad del sistema.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
           </table>
 
           <h2>🔍 3. TÉCNICAS DE CAJA BLANCA (White-box)</h2>
