@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import './App.css';
 
@@ -6,7 +7,22 @@ function ModalFloating({ open, x, y, children }: { open: boolean; x: number; y: 
   return (
     <div
       className="modal-floating"
-      style={{ position: 'fixed', top: y + 12, left: x + 12, zIndex: 9999 }}
+      style={{
+        position: 'fixed',
+        top: y + 12,
+        left: x + 12,
+        zIndex: 20000,
+        pointerEvents: 'auto',
+        minWidth: 340,
+        maxWidth: 480,
+        background: 'white',
+        borderRadius: 10,
+        boxShadow: '0 4px 24px #0003',
+        padding: 16,
+        border: '1.5px solid #b00',
+        fontSize: '0.95rem',
+        lineHeight: 1.25
+      }}
     >
       {children}
     </div>
@@ -84,10 +100,14 @@ const cuadrantes = [
 ];
 
 
+
 function App() {
   const [seleccionadas, setSeleccionadas] = useState<string[]>([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalPos, setModalPos] = useState({ x: 0, y: 0 });
+  // Estado para cada modal flotante
+  const [modalEquiOpen, setModalEquiOpen] = useState(false);
+  const [modalEquiPos, setModalEquiPos] = useState({ x: 0, y: 0 });
+  const [modalLimiteOpen, setModalLimiteOpen] = useState(false);
+  const [modalLimitePos, setModalLimitePos] = useState({ x: 0, y: 0 });
 
   const togglePrueba = (prueba: string) => {
     setSeleccionadas((prev) =>
@@ -228,21 +248,32 @@ function App() {
                 { nombre: 'Pruebas basadas en requisitos', desc: 'Cada caso se deriva de un requisito funcional concreto.' },
                 { nombre: 'Pruebas de comportamiento (BDD)', desc: 'Usa Gherkin o lenguajes similares para definir escenarios.' },
               ].map(({ nombre, desc }) => (
-                <tr key={nombre}
+                <tr
+                  key={nombre}
                   onMouseEnter={e => {
                     if (nombre === 'Partición de equivalencia') {
-                      setModalOpen(true);
-                      setModalPos({ x: e.clientX, y: e.clientY });
+                      setModalEquiOpen(true);
+                      setModalEquiPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Análisis de valores límite') {
+                      setModalLimiteOpen(true);
+                      setModalLimitePos({ x: e.clientX, y: e.clientY });
                     }
                   }}
                   onMouseMove={e => {
-                    if (nombre === 'Partición de equivalencia' && modalOpen) {
-                      setModalPos({ x: e.clientX, y: e.clientY });
+                    if (nombre === 'Partición de equivalencia' && modalEquiOpen) {
+                      setModalEquiPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Análisis de valores límite' && modalLimiteOpen) {
+                      setModalLimitePos({ x: e.clientX, y: e.clientY });
                     }
                   }}
-                  onMouseLeave={() => nombre === 'Partición de equivalencia' && setModalOpen(false)}
-                  style={{ cursor: nombre === 'Partición de equivalencia' ? 'pointer' : undefined }}
+                  onMouseLeave={() => {
+                    if (nombre === 'Partición de equivalencia') setModalEquiOpen(false);
+                    if (nombre === 'Análisis de valores límite') setModalLimiteOpen(false);
+                    
+                  }}
+                  style={{ cursor: nombre === 'Partición de equivalencia' || nombre === 'Análisis de valores límite' || nombre === 'Tabla de decisión' ? 'pointer' : undefined }}
                 >
+
                   <td>
                     <label className="santander-checkbox">
                       <input
@@ -258,23 +289,46 @@ function App() {
               ))}
             </tbody>
           </table>
-          <ModalFloating open={modalOpen} x={modalPos.x} y={modalPos.y}>
-            <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
-              <b style={{ fontSize: '1.01em', color: '#b00' }}>🎯 Escenario:</b>
-              <div style={{ marginBottom: '0.4em' }}>Supón que tienes un campo que acepta valores entre 1 y 100. La lógica válida es aceptar solo los números dentro de ese rango.</div>
-              <b style={{ fontSize: '1.01em', color: '#b00' }}>✅ Particiones:</b>
-              <ul style={{ margin: '0.2em 0 0 1em', padding: 0 }}>
-                <li><b>Clase válida:</b> valores entre 1 y 100 (por ejemplo, 50)</li>
-                <li><b>Clases inválidas:</b>
-                  <ul style={{ margin: '0.1em 0 0 1em', padding: 0 }}>
-                    <li>valores menores a 1 (ej. –5)</li>
-                    <li>valores mayores a 100 (ej. 150)</li>
-                  </ul>
-                </li>
-              </ul>
-              <b style={{ fontSize: '1.01em', color: '#b00' }}>🧪 Aplicación:</b>
-              <div>Seleccionas un valor por cada clase, con lo cual no necesitas probar todos los posibles valores.<br />Esto reduce el número de pruebas sin perder efectividad.</div>
-            </div>
+          {/* Modal flotante para Partición de equivalencia */}
+          <ModalFloating open={modalEquiOpen} x={modalEquiPos.x} y={modalEquiPos.y}>
+            {modalEquiOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>🎯 Escenario:</b>
+                <div style={{ marginBottom: '0.4em' }}>Supón que tienes un campo que acepta valores entre 1 y 100. La lógica válida es aceptar solo los números dentro de ese rango.</div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>✅ Particiones:</b>
+                <ul style={{ margin: '0.2em 0 0 1em', padding: 0 }}>
+                  <li><b>Clase válida:</b> valores entre 1 y 100 (por ejemplo, 50)</li>
+                  <li><b>Clases inválidas:</b>
+                    <ul style={{ margin: '0.1em 0 0 1em', padding: 0 }}>
+                      <li>valores menores a 1 (ej. –5)</li>
+                      <li>valores mayores a 100 (ej. 150)</li>
+                    </ul>
+                  </li>
+                </ul>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>🧪 Aplicación:</b>
+                <div>Seleccionas un valor por cada clase, con lo cual no necesitas probar todos los posibles valores.<br />Esto reduce el número de pruebas sin perder efectividad.</div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Análisis de valores límite */}
+          <ModalFloating open={modalLimiteOpen} x={modalLimitePos.x} y={modalLimitePos.y}>
+            {modalLimiteOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>🎯 Escenario:</b>
+                <div style={{ marginBottom: '0.4em' }}>Supón que un campo de entrada solo acepta valores entre 1 y 100 inclusive.</div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>✅ Valores a probar (por criterio de ISTQB):</b>
+                <ul style={{ margin: '0.2em 0 0 1em', padding: 0 }}>
+                  <li><b>Mínimo permitido:</b> 1</li>
+                  <li><b>Justo por debajo del mínimo:</b> 0 <span style={{color:'#b00'}}>❌</span></li>
+                  <li><b>Justo por encima del mínimo:</b> 2</li>
+                  <li><b>Máximo permitido:</b> 100</li>
+                  <li><b>Justo por debajo del máximo:</b> 99</li>
+                  <li><b>Justo por encima del máximo:</b> 101 <span style={{color:'#b00'}}>❌</span></li>
+                </ul>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>🧪 Objetivo:</b>
+                <div>Detectar errores típicos en los bordes del rango válido, donde suelen ocurrir fallos de comparación (&lt; en lugar de &lt;=, por ejemplo).</div>
+              </div>
+            )}
           </ModalFloating>
 
           <h2>🧠 2. TÉCNICAS BASADAS EN EXPERIENCIA</h2>
