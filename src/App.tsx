@@ -119,12 +119,13 @@ function App() {
   const [modalRequisitosPos, setModalRequisitosPos] = useState({ x: 0, y: 0 });
   const [modalBDDOpen, setModalBDDOpen] = useState(false);
   const [modalBDDPos, setModalBDDPos] = useState({ x: 0, y: 0 });
-  // Modal flotante para Pruebas exploratorias
   const [modalExploratoriasOpen, setModalExploratoriasOpen] = useState(false);
   const [modalExploratoriasPos, setModalExploratoriasPos] = useState({ x: 0, y: 0 });
-  // Modal flotante para Adivinación de errores
   const [modalErrorGuessingOpen, setModalErrorGuessingOpen] = useState(false);
   const [modalErrorGuessingPos, setModalErrorGuessingPos] = useState({ x: 0, y: 0 });
+  // Modal flotante para Checklists (listas de verificación)
+  const [modalChecklistsOpen, setModalChecklistsOpen] = useState(false);
+  const [modalChecklistsPos, setModalChecklistsPos] = useState({ x: 0, y: 0 });
 
   const togglePrueba = (prueba: string) => {
     setSeleccionadas((prev) =>
@@ -546,6 +547,36 @@ function App() {
                     </tr>
                   );
                 }
+                if (nombre === 'Checklists (listas de verificación)') {
+                  return (
+                    <tr
+                      key={nombre}
+                      onMouseEnter={e => {
+                        setModalChecklistsOpen(true);
+                        setModalChecklistsPos({ x: e.clientX, y: e.clientY });
+                      }}
+                      onMouseMove={e => {
+                        if (modalChecklistsOpen) {
+                          setModalChecklistsPos({ x: e.clientX, y: e.clientY });
+                        }
+                      }}
+                      onMouseLeave={() => setModalChecklistsOpen(false)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td>
+                        <label className="santander-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={seleccionadas.includes(nombre)}
+                            onChange={() => togglePrueba(nombre)}
+                          />
+                        </label>
+                      </td>
+                      <td>{nombre}</td>
+                      <td>{desc}</td>
+                    </tr>
+                  );
+                }
                 return (
                   <tr key={nombre}>
                     <td>
@@ -589,6 +620,21 @@ function App() {
                 <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
                 <div>
                   En una app bancaria, el tester intenta ingresar contraseñas incorrectas varias veces, deja campos obligatorios vacíos o introduce caracteres especiales en formularios, esperando que el sistema falle o muestre mensajes de error. Así identifica errores que podrían pasar desapercibidos en pruebas más estructuradas.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Checklists (listas de verificación) */}
+          <ModalFloating open={modalChecklistsOpen} x={modalChecklistsPos.x} y={modalChecklistsPos.y}>
+            {modalChecklistsOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  Las checklists son listas estructuradas de elementos, condiciones o pasos que deben ser verificados durante las pruebas. Ayudan a asegurar que ningún aspecto importante sea omitido, especialmente en pruebas de mantenimiento, regresión o validación de requisitos repetitivos.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una app bancaria, una checklist puede incluir: verificar que todos los campos obligatorios estén presentes, que los mensajes de error sean claros, que los botones funcionen correctamente, y que los datos se almacenen de forma segura. El tester recorre la lista punto por punto, marcando cada verificación realizada, lo que reduce el riesgo de olvidar validaciones críticas en cada ciclo de pruebas.
                 </div>
               </div>
             )}
