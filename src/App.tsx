@@ -458,7 +458,6 @@ function App() {
                     Entonces el sistema debe confirmar la operación<br />
                     Y mostrar el nuevo saldo actualizado.
                   </span>
-                  Este enfoque facilita la validación automática y legible para todos los perfiles del equipo.
                 </div>
               </div>
             )}
