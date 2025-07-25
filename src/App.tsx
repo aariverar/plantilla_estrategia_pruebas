@@ -122,6 +122,9 @@ function App() {
   // Modal flotante para Pruebas exploratorias
   const [modalExploratoriasOpen, setModalExploratoriasOpen] = useState(false);
   const [modalExploratoriasPos, setModalExploratoriasPos] = useState({ x: 0, y: 0 });
+  // Modal flotante para Adivinación de errores
+  const [modalErrorGuessingOpen, setModalErrorGuessingOpen] = useState(false);
+  const [modalErrorGuessingPos, setModalErrorGuessingPos] = useState({ x: 0, y: 0 });
 
   const togglePrueba = (prueba: string) => {
     setSeleccionadas((prev) =>
@@ -476,41 +479,74 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {[
+              {[ 
                 { nombre: 'Pruebas exploratorias', desc: 'Sin casos predefinidos, se prueba sobre la marcha observando resultados.' },
                 { nombre: 'Adivinación de errores (error guessing)', desc: 'Se anticipan fallos comunes basados en la experiencia del tester.' },
                 { nombre: 'Checklists (listas de verificación)', desc: 'Lista de elementos a validar. Útil en pruebas de mantenimiento.' },
                 { nombre: 'Pruebas basadas en escenarios', desc: 'Se diseñan historias realistas de uso para probar flujos completos.' },
                 { nombre: 'Pruebas heurísticas', desc: 'Aplicación de patrones conocidos de errores (ej. heurísticas de Bach).' },
-              ].map(({ nombre, desc }) => (
-                nombre === 'Pruebas exploratorias' ? (
-                  <tr
-                    key={nombre}
-                    onMouseEnter={e => {
-                      setModalExploratoriasOpen(true);
-                      setModalExploratoriasPos({ x: e.clientX, y: e.clientY });
-                    }}
-                    onMouseMove={e => {
-                      if (modalExploratoriasOpen) {
+              ].map(({ nombre, desc }) => {
+                if (nombre === 'Pruebas exploratorias') {
+                  return (
+                    <tr
+                      key={nombre}
+                      onMouseEnter={e => {
+                        setModalExploratoriasOpen(true);
                         setModalExploratoriasPos({ x: e.clientX, y: e.clientY });
-                      }
-                    }}
-                    onMouseLeave={() => setModalExploratoriasOpen(false)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <td>
-                      <label className="santander-checkbox">
-                        <input
-                          type="checkbox"
-                          checked={seleccionadas.includes(nombre)}
-                          onChange={() => togglePrueba(nombre)}
-                        />
-                      </label>
-                    </td>
-                    <td>{nombre}</td>
-                    <td>{desc}</td>
-                  </tr>
-                ) : (
+                      }}
+                      onMouseMove={e => {
+                        if (modalExploratoriasOpen) {
+                          setModalExploratoriasPos({ x: e.clientX, y: e.clientY });
+                        }
+                      }}
+                      onMouseLeave={() => setModalExploratoriasOpen(false)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td>
+                        <label className="santander-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={seleccionadas.includes(nombre)}
+                            onChange={() => togglePrueba(nombre)}
+                          />
+                        </label>
+                      </td>
+                      <td>{nombre}</td>
+                      <td>{desc}</td>
+                    </tr>
+                  );
+                }
+                if (nombre === 'Adivinación de errores (error guessing)') {
+                  return (
+                    <tr
+                      key={nombre}
+                      onMouseEnter={e => {
+                        setModalErrorGuessingOpen(true);
+                        setModalErrorGuessingPos({ x: e.clientX, y: e.clientY });
+                      }}
+                      onMouseMove={e => {
+                        if (modalErrorGuessingOpen) {
+                          setModalErrorGuessingPos({ x: e.clientX, y: e.clientY });
+                        }
+                      }}
+                      onMouseLeave={() => setModalErrorGuessingOpen(false)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td>
+                        <label className="santander-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={seleccionadas.includes(nombre)}
+                            onChange={() => togglePrueba(nombre)}
+                          />
+                        </label>
+                      </td>
+                      <td>{nombre}</td>
+                      <td>{desc}</td>
+                    </tr>
+                  );
+                }
+                return (
                   <tr key={nombre}>
                     <td>
                       <label className="santander-checkbox">
@@ -524,8 +560,8 @@ function App() {
                     <td>{nombre}</td>
                     <td>{desc}</td>
                   </tr>
-                )
-              ))}
+                );
+              })}
             </tbody>
           {/* Modal flotante para Pruebas exploratorias */}
           <ModalFloating open={modalExploratoriasOpen} x={modalExploratoriasPos.x} y={modalExploratoriasPos.y}>
@@ -538,6 +574,21 @@ function App() {
                 <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
                 <div>
                   En una app bancaria, el tester navega libremente, consulta saldos, transfiere fondos y modifica datos, simulando escenarios como errores de conexión o cambios de contraseña seguidos de transferencias. Así, detecta problemas de usabilidad y validación que no están cubiertos en pruebas formales, mejorando la calidad y seguridad del sistema.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Adivinación de errores (error guessing) */}
+          <ModalFloating open={modalErrorGuessingOpen} x={modalErrorGuessingPos.x} y={modalErrorGuessingPos.y}>
+            {modalErrorGuessingOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  La adivinación de errores se usa cuando el tester, basándose en su experiencia, anticipa fallos comunes que pueden ocurrir en el sistema y prueba específicamente esos escenarios para encontrar defectos ocultos.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una app bancaria, el tester intenta ingresar contraseñas incorrectas varias veces, deja campos obligatorios vacíos o introduce caracteres especiales en formularios, esperando que el sistema falle o muestre mensajes de error. Así identifica errores que podrían pasar desapercibidos en pruebas más estructuradas.
                 </div>
               </div>
             )}
