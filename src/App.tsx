@@ -123,9 +123,13 @@ function App() {
   const [modalExploratoriasPos, setModalExploratoriasPos] = useState({ x: 0, y: 0 });
   const [modalErrorGuessingOpen, setModalErrorGuessingOpen] = useState(false);
   const [modalErrorGuessingPos, setModalErrorGuessingPos] = useState({ x: 0, y: 0 });
-  // Modal flotante para Checklists (listas de verificación)
   const [modalChecklistsOpen, setModalChecklistsOpen] = useState(false);
   const [modalChecklistsPos, setModalChecklistsPos] = useState({ x: 0, y: 0 });
+  const [modalEscenariosOpen, setModalEscenariosOpen] = useState(false);
+  const [modalEscenariosPos, setModalEscenariosPos] = useState({ x: 0, y: 0 });
+  // Modal flotante para Pruebas heurísticas
+  const [modalHeuristicasOpen, setModalHeuristicasOpen] = useState(false);
+  const [modalHeuristicasPos, setModalHeuristicasPos] = useState({ x: 0, y: 0 });
 
   const togglePrueba = (prueba: string) => {
     setSeleccionadas((prev) =>
@@ -577,6 +581,66 @@ function App() {
                     </tr>
                   );
                 }
+                if (nombre === 'Pruebas basadas en escenarios') {
+                  return (
+                    <tr
+                      key={nombre}
+                      onMouseEnter={e => {
+                        setModalEscenariosOpen(true);
+                        setModalEscenariosPos({ x: e.clientX, y: e.clientY });
+                      }}
+                      onMouseMove={e => {
+                        if (modalEscenariosOpen) {
+                          setModalEscenariosPos({ x: e.clientX, y: e.clientY });
+                        }
+                      }}
+                      onMouseLeave={() => setModalEscenariosOpen(false)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td>
+                        <label className="santander-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={seleccionadas.includes(nombre)}
+                            onChange={() => togglePrueba(nombre)}
+                          />
+                        </label>
+                      </td>
+                      <td>{nombre}</td>
+                      <td>{desc}</td>
+                    </tr>
+                  );
+                }
+                if (nombre === 'Pruebas heurísticas') {
+                  return (
+                    <tr
+                      key={nombre}
+                      onMouseEnter={e => {
+                        setModalHeuristicasOpen(true);
+                        setModalHeuristicasPos({ x: e.clientX, y: e.clientY });
+                      }}
+                      onMouseMove={e => {
+                        if (modalHeuristicasOpen) {
+                          setModalHeuristicasPos({ x: e.clientX, y: e.clientY });
+                        }
+                      }}
+                      onMouseLeave={() => setModalHeuristicasOpen(false)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td>
+                        <label className="santander-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={seleccionadas.includes(nombre)}
+                            onChange={() => togglePrueba(nombre)}
+                          />
+                        </label>
+                      </td>
+                      <td>{nombre}</td>
+                      <td>{desc}</td>
+                    </tr>
+                  );
+                }
                 return (
                   <tr key={nombre}>
                     <td>
@@ -635,6 +699,36 @@ function App() {
                 <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
                 <div>
                   En una app bancaria, una checklist puede incluir: verificar que todos los campos obligatorios estén presentes, que los mensajes de error sean claros, que los botones funcionen correctamente, y que los datos se almacenen de forma segura. El tester recorre la lista punto por punto, marcando cada verificación realizada, lo que reduce el riesgo de olvidar validaciones críticas en cada ciclo de pruebas.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Pruebas basadas en escenarios */}
+          <ModalFloating open={modalEscenariosOpen} x={modalEscenariosPos.x} y={modalEscenariosPos.y}>
+            {modalEscenariosOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  Las pruebas basadas en escenarios utilizan historias realistas de uso para validar flujos completos y detectar problemas en situaciones similares a las que enfrentan los usuarios.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una app bancaria, se simula que un usuario inicia sesión, consulta su saldo, transfiere dinero y descarga un comprobante, verificando que todo el proceso funcione correctamente.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Pruebas heurísticas */}
+          <ModalFloating open={modalHeuristicasOpen} x={modalHeuristicasPos.x} y={modalHeuristicasPos.y}>
+            {modalHeuristicasOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  Las pruebas heurísticas utilizan patrones conocidos de errores para identificar posibles fallos, guiándose por principios o “reglas generales” como las heurísticas de Bach.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una app bancaria, el tester aplica la heurística de “entrada inválida” probando datos fuera de rango o formatos incorrectos en formularios, buscando errores que suelen ocurrir según patrones conocidos.
                 </div>
               </div>
             )}
