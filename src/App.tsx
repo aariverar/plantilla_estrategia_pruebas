@@ -130,6 +130,9 @@ function App() {
   // Modal flotante para Pruebas heurísticas
   const [modalHeuristicasOpen, setModalHeuristicasOpen] = useState(false);
   const [modalHeuristicasPos, setModalHeuristicasPos] = useState({ x: 0, y: 0 });
+  // Modal flotante para Cobertura de sentencias
+  const [modalSentenciasOpen, setModalSentenciasOpen] = useState(false);
+  const [modalSentenciasPos, setModalSentenciasPos] = useState({ x: 0, y: 0 });
 
   const togglePrueba = (prueba: string) => {
     setSeleccionadas((prev) =>
@@ -753,23 +756,74 @@ function App() {
                 { nombre: 'Cobertura de múltiples condiciones', desc: 'Evalúa todas las combinaciones de condiciones en una decisión.' },
                 { nombre: 'Pruebas de flujo de datos', desc: 'Verifica el uso correcto de variables (definidas, usadas, destruidas).' },
                 { nombre: 'Pruebas de caminos lógicos', desc: 'Verifica todos los caminos posibles a través del código.' },
-              ].map(({ nombre, desc }) => (
-                <tr key={nombre}>
-                  <td>
-                    <label className="santander-checkbox">
-                      <input
-                        type="checkbox"
-                        checked={seleccionadas.includes(nombre)}
-                        onChange={() => togglePrueba(nombre)}
-                      />
-                    </label>
-                  </td>
-                  <td>{nombre}</td>
-                  <td>{desc}</td>
-                </tr>
-              ))}
+              ].map(({ nombre, desc }) => {
+                if (nombre === 'Cobertura de sentencias') {
+                  return (
+                    <tr
+                      key={nombre}
+                      onMouseEnter={e => {
+                        setModalSentenciasOpen(true);
+                        setModalSentenciasPos({ x: e.clientX, y: e.clientY });
+                      }}
+                      onMouseMove={e => {
+                        if (modalSentenciasOpen) {
+                          setModalSentenciasPos({ x: e.clientX, y: e.clientY });
+                        }
+                      }}
+                      onMouseLeave={() => setModalSentenciasOpen(false)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td>
+                        <label className="santander-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={seleccionadas.includes(nombre)}
+                            onChange={() => togglePrueba(nombre)}
+                          />
+                        </label>
+                      </td>
+                      <td>{nombre}</td>
+                      <td>{desc}</td>
+                    </tr>
+                  );
+                }
+                return (
+                  <tr key={nombre}>
+                    <td>
+                      <label className="santander-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={seleccionadas.includes(nombre)}
+                          onChange={() => togglePrueba(nombre)}
+                        />
+                      </label>
+                    </td>
+                    <td>{nombre}</td>
+                    <td>{desc}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+          {/* Modal flotante para Cobertura de sentencias */}
+          <ModalFloating open={modalSentenciasOpen} x={modalSentenciasPos.x} y={modalSentenciasPos.y}>
+            {modalSentenciasOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  La cobertura de sentencias se utiliza para asegurar que todas las líneas de código sean ejecutadas al menos una vez durante las pruebas, identificando partes del código no probadas y ayudando a mejorar la calidad del software.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Herramienta:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  <b>SonarQube:</b> Plataforma que analiza el código fuente y genera reportes de cobertura, calidad y seguridad.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una app bancaria en Java, se ejecutan pruebas y SonarQube muestra que la línea <span style={{ fontFamily: 'monospace', background: '#f8f8f8', padding: '0.2em 0.4em', borderRadius: 4 }}>if (monto &gt; saldo)</span> en el método de transferencia fue ejecutada durante las pruebas, asegurando que esa parte del código está cubierta.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
 
           <div className="istqb-extra">
             <h3>🔄 TÉCNICAS ADICIONALES SEGÚN ISTQB AVANZADO (Test Analyst y Test Manager)</h3>
