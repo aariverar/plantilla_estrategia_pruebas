@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import './App.css';
 
@@ -108,6 +107,18 @@ function App() {
   const [modalEquiPos, setModalEquiPos] = useState({ x: 0, y: 0 });
   const [modalLimiteOpen, setModalLimiteOpen] = useState(false);
   const [modalLimitePos, setModalLimitePos] = useState({ x: 0, y: 0 });
+  const [modalDecisionOpen, setModalDecisionOpen] = useState(false);
+  const [modalDecisionPos, setModalDecisionPos] = useState({ x: 0, y: 0 });
+  const [modalCausaEfectoOpen, setModalCausaEfectoOpen] = useState(false);
+  const [modalCausaEfectoPos, setModalCausaEfectoPos] = useState({ x: 0, y: 0 });
+  const [modalTransicionOpen, setModalTransicionOpen] = useState(false);
+  const [modalTransicionPos, setModalTransicionPos] = useState({ x: 0, y: 0 });
+  const [modalCasoUsoOpen, setModalCasoUsoOpen] = useState(false);
+  const [modalCasoUsoPos, setModalCasoUsoPos] = useState({ x: 0, y: 0 });
+  const [modalRequisitosOpen, setModalRequisitosOpen] = useState(false);
+  const [modalRequisitosPos, setModalRequisitosPos] = useState({ x: 0, y: 0 });
+  const [modalBDDOpen, setModalBDDOpen] = useState(false);
+  const [modalBDDPos, setModalBDDPos] = useState({ x: 0, y: 0 });
 
   const togglePrueba = (prueba: string) => {
     setSeleccionadas((prev) =>
@@ -257,21 +268,56 @@ function App() {
                     } else if (nombre === 'Análisis de valores límite') {
                       setModalLimiteOpen(true);
                       setModalLimitePos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Tabla de decisión') {
+                      setModalDecisionOpen(true);
+                      setModalDecisionPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Tabla de causa-efecto') {
+                      setModalCausaEfectoOpen(true);
+                      setModalCausaEfectoPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Transición de estados') {
+                      setModalTransicionOpen(true);
+                      setModalTransicionPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Caso de uso (Use Case)') {
+                      setModalCasoUsoOpen(true);
+                      setModalCasoUsoPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Pruebas basadas en requisitos') {
+                      setModalRequisitosOpen(true);
+                      setModalRequisitosPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Pruebas de comportamiento (BDD)') {
+                      setModalBDDOpen(true);
+                      setModalBDDPos({ x: e.clientX, y: e.clientY });
                     }
-                  }}
-                  onMouseMove={e => {
+                }}
+                onMouseMove={e => {
                     if (nombre === 'Partición de equivalencia' && modalEquiOpen) {
                       setModalEquiPos({ x: e.clientX, y: e.clientY });
                     } else if (nombre === 'Análisis de valores límite' && modalLimiteOpen) {
                       setModalLimitePos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Tabla de decisión' && modalDecisionOpen) {
+                      setModalDecisionPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Tabla de causa-efecto' && modalCausaEfectoOpen) {
+                      setModalCausaEfectoPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Transición de estados' && modalTransicionOpen) {
+                      setModalTransicionPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Caso de uso (Use Case)' && modalCasoUsoOpen) {
+                      setModalCasoUsoPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Pruebas basadas en requisitos' && modalRequisitosOpen) {
+                      setModalRequisitosPos({ x: e.clientX, y: e.clientY });
+                    } else if (nombre === 'Pruebas de comportamiento (BDD)' && modalBDDOpen) {
+                      setModalBDDPos({ x: e.clientX, y: e.clientY });
                     }
-                  }}
-                  onMouseLeave={() => {
+                }}
+                onMouseLeave={() => {
                     if (nombre === 'Partición de equivalencia') setModalEquiOpen(false);
                     if (nombre === 'Análisis de valores límite') setModalLimiteOpen(false);
-                    
-                  }}
-                  style={{ cursor: nombre === 'Partición de equivalencia' || nombre === 'Análisis de valores límite' || nombre === 'Tabla de decisión' ? 'pointer' : undefined }}
+                    if (nombre === 'Tabla de decisión') setModalDecisionOpen(false);
+                    if (nombre === 'Tabla de causa-efecto') setModalCausaEfectoOpen(false);
+                    if (nombre === 'Transición de estados') setModalTransicionOpen(false);
+                    if (nombre === 'Caso de uso (Use Case)') setModalCasoUsoOpen(false);
+                    if (nombre === 'Pruebas basadas en requisitos') setModalRequisitosOpen(false);
+                    if (nombre === 'Pruebas de comportamiento (BDD)') setModalBDDOpen(false);
+                }}
+                style={{ cursor: nombre === 'Partición de equivalencia' || nombre === 'Análisis de valores límite' || nombre === 'Tabla de decisión' || nombre === 'Tabla de causa-efecto' || nombre === 'Transición de estados' || nombre === 'Caso de uso (Use Case)' || nombre === 'Pruebas basadas en requisitos' || nombre === 'Pruebas de comportamiento (BDD)' ? 'pointer' : undefined }}
                 >
 
                   <td>
@@ -293,20 +339,14 @@ function App() {
           <ModalFloating open={modalEquiOpen} x={modalEquiPos.x} y={modalEquiPos.y}>
             {modalEquiOpen && (
               <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
-                <b style={{ fontSize: '1.01em', color: '#b00' }}>🎯 Escenario:</b>
-                <div style={{ marginBottom: '0.4em' }}>Supón que tienes un campo que acepta valores entre 1 y 100. La lógica válida es aceptar solo los números dentro de ese rango.</div>
-                <b style={{ fontSize: '1.01em', color: '#b00' }}>✅ Particiones:</b>
-                <ul style={{ margin: '0.2em 0 0 1em', padding: 0 }}>
-                  <li><b>Clase válida:</b> valores entre 1 y 100 (por ejemplo, 50)</li>
-                  <li><b>Clases inválidas:</b>
-                    <ul style={{ margin: '0.1em 0 0 1em', padding: 0 }}>
-                      <li>valores menores a 1 (ej. –5)</li>
-                      <li>valores mayores a 100 (ej. 150)</li>
-                    </ul>
-                  </li>
-                </ul>
-                <b style={{ fontSize: '1.01em', color: '#b00' }}>🧪 Aplicación:</b>
-                <div>Seleccionas un valor por cada clase, con lo cual no necesitas probar todos los posibles valores.<br />Esto reduce el número de pruebas sin perder efectividad.</div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  La partición de equivalencia se utiliza para dividir el conjunto de entradas en clases válidas e inválidas, con el fin de reducir el número de casos de prueba. Se asume que todos los valores dentro de una misma clase se comportan de forma similar, por lo que basta con probar un valor representativo de cada clase.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  Si una app permite registrarse solo a personas entre 18 y 65 años, se identifican tres clases: edad válida (18–65), edad inválida menor a 18 y edad inválida mayor a 65. Luego se elige un valor por clase, como 30, 15 y 70 respectivamente, para verificar que la validación se comporte correctamente en cada grupo.
+                </div>
               </div>
             )}
           </ModalFloating>
@@ -314,19 +354,112 @@ function App() {
           <ModalFloating open={modalLimiteOpen} x={modalLimitePos.x} y={modalLimitePos.y}>
             {modalLimiteOpen && (
               <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
-                <b style={{ fontSize: '1.01em', color: '#b00' }}>🎯 Escenario:</b>
-                <div style={{ marginBottom: '0.4em' }}>Supón que un campo de entrada solo acepta valores entre 1 y 100 inclusive.</div>
-                <b style={{ fontSize: '1.01em', color: '#b00' }}>✅ Valores a probar (por criterio de ISTQB):</b>
-                <ul style={{ margin: '0.2em 0 0 1em', padding: 0 }}>
-                  <li><b>Mínimo permitido:</b> 1</li>
-                  <li><b>Justo por debajo del mínimo:</b> 0 <span style={{color:'#b00'}}>❌</span></li>
-                  <li><b>Justo por encima del mínimo:</b> 2</li>
-                  <li><b>Máximo permitido:</b> 100</li>
-                  <li><b>Justo por debajo del máximo:</b> 99</li>
-                  <li><b>Justo por encima del máximo:</b> 101 <span style={{color:'#b00'}}>❌</span></li>
-                </ul>
-                <b style={{ fontSize: '1.01em', color: '#b00' }}>🧪 Objetivo:</b>
-                <div>Detectar errores típicos en los bordes del rango válido, donde suelen ocurrir fallos de comparación (&lt; en lugar de &lt;=, por ejemplo).</div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  El análisis de valores límite se usa para verificar cómo se comporta un sistema en los extremos de los rangos válidos e inválidos. Esta técnica se basa en que los errores suelen ocurrir en los límites, por lo que se prueban los valores mínimos, máximos, y los inmediatamente adyacentes a esos límites.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  Si una app acepta edades entre 18 y 65 años para registrarse, se prueban los valores límite: 18 y 65 (válidos), así como 17 y 66 (inválidos). Esto permite detectar errores comunes en la validación de rangos al probar justo en los bordes del comportamiento esperado.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Tabla de decisión */}
+          <ModalFloating open={modalDecisionOpen} x={modalDecisionPos.x} y={modalDecisionPos.y}>
+            {modalDecisionOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  La técnica de tabla de decisión se utiliza para evaluar todas las combinaciones posibles de condiciones y sus respectivas acciones o resultados. Es útil cuando una funcionalidad depende de múltiples reglas lógicas que se deben cumplir en distintas combinaciones.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  Para otorgar un préstamo, una entidad puede considerar dos condiciones: si el cliente tiene ingresos fijos y si no tiene deudas. La tabla de decisión analizaría las cuatro combinaciones posibles (sí/sí, sí/no, no/sí, no/no) y definiría la acción correspondiente en cada caso, como "aprobar", "evaluar", o "rechazar", asegurando cobertura total de reglas.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Tabla de causa-efecto */}
+          <ModalFloating open={modalCausaEfectoOpen} x={modalCausaEfectoPos.x} y={modalCausaEfectoPos.y}>
+            {modalCausaEfectoOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  La tabla de causa-efecto se utiliza para derivar casos de prueba a partir de una representación lógica que relaciona causas (entradas o condiciones) con efectos (salidas o acciones). Es útil cuando múltiples condiciones influyen en distintos resultados, permitiendo identificar combinaciones relevantes de forma sistemática.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una banca en línea, las causas pueden ser: ingreso correcto de usuario, ingreso correcto de contraseña y uso de dispositivo confiable. Según las combinaciones de estas condiciones, los efectos pueden ser permitir el acceso, requerir verificación adicional (OTP), o bloquear el intento. La tabla de causa-efecto permite definir casos de prueba para cada combinación, validando que el sistema responda adecuadamente ante intentos válidos, sospechosos o fallidos.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Transición de estados */}
+          <ModalFloating open={modalTransicionOpen} x={modalTransicionPos.x} y={modalTransicionPos.y}>
+            {modalTransicionOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  La técnica de transición de estados se utiliza para probar el comportamiento de un sistema a medida que cambia de un estado a otro en respuesta a ciertos eventos. Permite validar que las transiciones, condiciones y respuestas del sistema sean correctas según el flujo definido.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una app bancaria, una tarjeta puede estar en estado "Activa", "Bloqueada" o "Cancelada". Acciones como "ingresar clave errónea tres veces" o "solicitar cancelación" provocan transiciones entre estos estados. Mediante un diagrama de estados, se generan casos de prueba para verificar que cada evento conduzca al estado correcto.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Caso de uso */}
+          <ModalFloating open={modalCasoUsoOpen} x={modalCasoUsoPos.x} y={modalCasoUsoPos.y}>
+            {modalCasoUsoOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  La técnica de caso de uso se enfoca en validar los flujos funcionales del usuario a través del sistema, considerando pasos normales y alternativos. Permite verificar que cada interacción cumpla los objetivos del usuario según los requisitos del negocio.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una banca móvil, un caso de uso puede ser "Realizar transferencia entre cuentas". El flujo principal incluye: ingresar al sistema, seleccionar cuentas origen y destino, ingresar el monto y confirmar. Los flujos alternativos incluyen errores como saldo insuficiente o formato inválido del monto. Las pruebas se diseñan para cubrir tanto el camino exitoso como las excepciones, garantizando una experiencia funcional completa.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Pruebas basadas en requisitos */}
+          <ModalFloating open={modalRequisitosOpen} x={modalRequisitosPos.x} y={modalRequisitosPos.y}>
+            {modalRequisitosOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  Las pruebas basadas en requisitos consisten en derivar casos de prueba directamente de los requisitos funcionales definidos para el sistema. Aseguran que cada funcionalidad especificada se haya implementado correctamente y cumpla con lo solicitado por el cliente o el negocio.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  Si un requisito en una aplicación bancaria indica que "el usuario debe poder visualizar el saldo de todas sus cuentas en la pantalla principal después de iniciar sesión", se genera un caso de prueba que verifica exactamente esa funcionalidad: ingresar al sistema y comprobar que se muestran los saldos correctamente. Así, cada requisito tiene una o más pruebas que validan su cumplimiento.
+                </div>
+              </div>
+            )}
+          </ModalFloating>
+          {/* Modal flotante para Pruebas de comportamiento (BDD) */}
+          <ModalFloating open={modalBDDOpen} x={modalBDDPos.x} y={modalBDDPos.y}>
+            {modalBDDOpen && (
+              <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
+                <div style={{ marginBottom: '0.4em' }}>
+                  Las pruebas de comportamiento (BDD) se basan en la colaboración entre negocio, desarrollo y QA para definir escenarios de prueba usando un lenguaje natural estructurado como Gherkin. Estas pruebas describen el comportamiento esperado del sistema en función de ejemplos concretos que mejoran la comprensión compartida.
+                </div>
+                <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
+                <div>
+                  En una app bancaria, un escenario BDD podría validar una transferencia exitosa entre cuentas. Usando Gherkin, se escribe:<br />
+                  <span style={{ display: 'block', margin: '0.5em 0', fontFamily: 'monospace', background: '#f8f8f8', padding: '0.5em', borderRadius: 6 }}>
+                    Dado que el usuario ha iniciado sesión,<br />
+                    Y tiene saldo suficiente,<br />
+                    Cuando realiza una transferencia de S/100,<br />
+                    Entonces el sistema debe confirmar la operación<br />
+                    Y mostrar el nuevo saldo actualizado.
+                  </span>
+                  Este enfoque facilita la validación automática y legible para todos los perfiles del equipo.
+                </div>
               </div>
             )}
           </ModalFloating>
