@@ -748,7 +748,7 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {[
+              {[ 
                 { nombre: 'Cobertura de sentencias', desc: 'Asegura que cada línea de código sea ejecutada al menos una vez.' },
                 { nombre: 'Cobertura de decisiones (ramas)', desc: 'Asegura que cada decisión (if, else, switch) sea evaluada en ambas direcciones.' },
                 { nombre: 'Cobertura de condiciones', desc: 'Evalúa cada condición booleana por separado.' },
@@ -764,6 +764,7 @@ function App() {
                       onMouseEnter={e => {
                         setModalSentenciasOpen(true);
                         setModalSentenciasPos({ x: e.clientX, y: e.clientY });
+                        setModalDecisionOpen(false);
                       }}
                       onMouseMove={e => {
                         if (modalSentenciasOpen) {
@@ -771,6 +772,37 @@ function App() {
                         }
                       }}
                       onMouseLeave={() => setModalSentenciasOpen(false)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td>
+                        <label className="santander-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={seleccionadas.includes(nombre)}
+                            onChange={() => togglePrueba(nombre)}
+                          />
+                        </label>
+                      </td>
+                      <td>{nombre}</td>
+                      <td>{desc}</td>
+                    </tr>
+                  );
+                }
+                if (nombre === 'Cobertura de decisiones (ramas)') {
+                  return (
+                    <tr
+                      key={nombre}
+                      onMouseEnter={e => {
+                        setModalDecisionOpen(true);
+                        setModalDecisionPos({ x: e.clientX, y: e.clientY });
+                        setModalSentenciasOpen(false);
+                      }}
+                      onMouseMove={e => {
+                        if (modalDecisionOpen) {
+                          setModalDecisionPos({ x: e.clientX, y: e.clientY });
+                        }
+                      }}
+                      onMouseLeave={() => setModalDecisionOpen(false)}
                       style={{ cursor: 'pointer' }}
                     >
                       <td>
@@ -811,20 +843,16 @@ function App() {
               <div className="modal-content modal-content-floating" style={{ fontSize: '0.89rem', lineHeight: 1.25 }}>
                 <b style={{ fontSize: '1.01em', color: '#b00' }}>Aplicación:</b>
                 <div style={{ marginBottom: '0.4em' }}>
-                  La cobertura de sentencias se utiliza para asegurar que todas las líneas de código sean ejecutadas al menos una vez durante las pruebas, identificando partes del código no probadas y ayudando a mejorar la calidad del software.
-                </div>
-                <b style={{ fontSize: '1.01em', color: '#b00' }}>Herramienta:</b>
-                <div style={{ marginBottom: '0.4em' }}>
-                  <b>SonarQube:</b> Plataforma que analiza el código fuente y genera reportes de cobertura, calidad y seguridad.
+                  Asegura que cada línea de código sea ejecutada al menos una vez durante las pruebas, verificando la cobertura de sentencias en el sistema.
                 </div>
                 <b style={{ fontSize: '1.01em', color: '#b00' }}>Ejemplo:</b>
                 <div>
-                  En una app bancaria en Java, se ejecutan pruebas y SonarQube muestra que la línea <span style={{ fontFamily: 'monospace', background: '#f8f8f8', padding: '0.2em 0.4em', borderRadius: 4 }}>if (monto &gt; saldo)</span> en el método de transferencia fue ejecutada durante las pruebas, asegurando que esa parte del código está cubierta.
+                  En una app bancaria en Java, se ejecutan pruebas y se verifica que todas las líneas del método de transferencia se ejecutan, incluyendo validaciones y actualizaciones de saldo.
                 </div>
               </div>
             )}
           </ModalFloating>
-
+  
           <div className="istqb-extra">
             <h3>🔄 TÉCNICAS ADICIONALES SEGÚN ISTQB AVANZADO (Test Analyst y Test Manager)</h3>
             <table className="istqb-extra-table">
